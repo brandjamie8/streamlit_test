@@ -25,8 +25,7 @@ else:
 df['Total Demand (Hours)'] = df['Annual Demand (Cases)'] * df['Average Duration (Hours)']
 total_demand_hours = df['Total Demand (Hours)'].sum()
 
-# User Inputs
-st.title('Demand and Capacity Tool for Surgeries')
+st.title('Theatres Demand and Capacity')
 
 st.sidebar.header('Theatre Parameters')
 sessions_per_week = st.sidebar.slider('Sessions per Week', min_value=0, max_value=20, value=10)
@@ -34,19 +33,16 @@ weeks_operating_per_year = st.sidebar.slider('Weeks Operating per Year', min_val
 utilization_percentage = st.sidebar.slider('Utilisation Percentage', min_value=0.0, max_value=1.0, value=0.80, step=0.05)
 session_duration = st.sidebar.number_input('Session Duration (Hours)', value=4)
 
-# Calculations
 total_capacity_hours = sessions_per_week * weeks_operating_per_year * session_duration * utilization_percentage
 net_capacity_hours = total_capacity_hours - total_demand_hours
 percentage_demand_met = (total_capacity_hours / total_demand_hours) * 100 if total_demand_hours > 0 else 0
 
-# Display Results
 st.subheader('Results')
 st.write(f"**Total Demand Hours:** {total_demand_hours}")
 st.write(f"**Total Capacity Hours:** {total_capacity_hours}")
 st.write(f"**Net Capacity (Hours):** {net_capacity_hours}")
 st.write(f"**Percentage of Demand Met:** {percentage_demand_met:.2f}%")
 
-# Visualization - Demand vs Capacity
 labels = ['Total Demand', 'Total Capacity']
 values = [total_demand_hours, total_capacity_hours]
 colors = ['#1f77b4', '#ff7f0e']
@@ -57,18 +53,15 @@ ax.set_ylabel('Hours')
 ax.set_title('Demand vs Capacity')
 st.pyplot(fig)
 
-# Visualization - Demand per Procedure
 st.subheader('Demand Hours per Procedure')
 fig2, ax2 = plt.subplots()
 df.plot(kind='bar', x='Procedure', y='Total Demand (Hours)', ax=ax2, color='purple')
 ax2.set_ylabel('Total Demand (Hours)')
 st.pyplot(fig2)
 
-# Display DataFrame
 st.subheader('Procedure Details')
 st.dataframe(df)
 
-# Export Results
 st.sidebar.header('Export Results')
 if st.sidebar.button('Download Results as CSV'):
     df_results = pd.DataFrame({

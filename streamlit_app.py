@@ -39,8 +39,8 @@ percentage_demand_met = (total_capacity_hours / total_demand_hours) * 100 if tot
 
 st.subheader('Results')
 st.write(f"**Total Demand Hours:** {total_demand_hours}")
-st.write(f"**Total Capacity Hours:** {total_capacity_hours}")
-st.write(f"**Net Capacity (Hours):** {net_capacity_hours}")
+st.write(f"**Total Capacity Hours:** {total_capacity_hours:.2f}")
+st.write(f"**Net Capacity (Hours):** {net_capacity_hours:.2f}")
 st.write(f"**Percentage of Demand Met:** {percentage_demand_met:.2f}%")
 
 labels = ['Total Demand', 'Total Capacity']

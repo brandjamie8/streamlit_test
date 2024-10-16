@@ -31,7 +31,7 @@ st.title('Demand and Capacity Tool for Surgeries')
 st.sidebar.header('Theatre Parameters')
 sessions_per_week = st.sidebar.slider('Sessions per Week', min_value=0, max_value=20, value=10)
 weeks_operating_per_year = st.sidebar.slider('Weeks Operating per Year', min_value=0, max_value=52, value=48)
-utilization_percentage = st.sidebar.slider('Utilization Percentage', min_value=0.0, max_value=1.0, value=0.80, step=0.05)
+utilization_percentage = st.sidebar.slider('Utilisation Percentage', min_value=0.0, max_value=1.0, value=0.80, step=0.05)
 session_duration = st.sidebar.number_input('Session Duration (Hours)', value=4)
 
 # Calculations

@@ -106,22 +106,39 @@ backlog_end_of_year = max(0, backlog_start - treated_cases_for_breaches)
 non_backlog_end_of_year = max(0, (waiting_list_start - backlog_start + waiting_list_addition) - treated_other_cases)
 end_of_year_waiting_list = backlog_end_of_year + non_backlog_end_of_year
 
-# Waterfall chart
+# Waterfall chart: Adjust the order as per user request
 st.subheader('Waterfall Chart: Waiting List Dynamics')
 
 waterfall_fig = go.Figure(go.Waterfall(
-    x=["Start of Year: Backlog", "Start of Year: Waiting List", "New Additions", "Treated from Backlog", "Treated from Waiting List", "End of Year: Backlog", "End of Year: Waiting List"],
-    y=[backlog_start, non_backlog_start, waiting_list_addition, -treated_cases_for_breaches, -treated_other_cases, backlog_end_of_year, non_backlog_end_of_year],
-    measure=["absolute", "absolute", "relative", "relative", "relative", "absolute", "absolute"],
-    text=[f"{backlog_start:.2f}", f"{non_backlog_start:.2f}", f"{waiting_list_addition:.2f}", f"{-treated_cases_for_breaches:.2f}", f"{-treated_other_cases:.2f}", f"{backlog_end_of_year:.2f}", f"{non_backlog_end_of_year:.2f}"],
+    x=["New Additions", "Start of Year: Waiting List", "Start of Year: Backlog", "Treated from Backlog", "Treated from Waiting List", "End of Year"],
+    y=[waiting_list_addition, non_backlog_start, backlog_start, -treated_cases_for_breaches, -treated_other_cases, end_of_year_waiting_list],
+    measure=["absolute", "relative", "relative", "relative", "relative", "absolute"],
+    text=[f"{waiting_list_addition:.2f}", f"{non_backlog_start:.2f}", f"{backlog_start:.2f}", f"{-treated_cases_for_breaches:.2f}", f"{-treated_other_cases:.2f}", f"{end_of_year_waiting_list:.2f}"],
     textposition="auto",
     connector={"line": {"color": "rgb(63, 63, 63)"}},
     decreasing={"marker": {"color": "red"}},
     increasing={"marker": {"color": "green"}},
-    totals={"marker": {"color": "blue"}}
+    totals={"marker": {"color": "blue"}},
+    name="Total"
 ))
 
-waterfall_fig.update_layout(title="Waiting List Dynamics Over the Year")
+# Stacked bar at the end of year showing backlog and waiting list
+waterfall_fig.add_trace(go.Bar(
+    x=["End of Year"],
+    y=[backlog_end_of_year],
+    name='Backlog',
+    marker_color='indianred'
+))
+
+waterfall_fig.add_trace(go.Bar(
+    x=["End of Year"],
+    y=[non_backlog_end_of_year],
+    name='Waiting List',
+    marker_color='lightseagreen',
+    base=[backlog_end_of_year]
+))
+
+waterfall_fig.update_layout(barmode='stack', title="Waiting List Dynamics Over the Year")
 st.plotly_chart(waterfall_fig, use_container_width=True)
 
 # Section 3 - Required Capacity to Meet Demand and Waiting Time Target

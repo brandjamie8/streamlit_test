@@ -144,6 +144,9 @@ capacity_vs_demand = pd.DataFrame({
 fig_capacity_vs_demand = px.bar(capacity_vs_demand, x='Category', y='Minutes', title='Required Capacity vs Demand Comparison')
 st.plotly_chart(fig_capacity_vs_demand, use_container_width=True)
 
+# Add a logo
+st.sidebar.image('logo.jpg', use_column_width=True)
+
 # Export Results
 st.sidebar.header('Export Results')
 if st.sidebar.button('Download Results as CSV'):
@@ -158,6 +161,5 @@ if st.sidebar.button('Download Results as CSV'):
     df_results.to_csv('results.csv', index=False)
     st.sidebar.write('Results exported as `results.csv`')
 
-# Add a logo
-st.sidebar.image('logo.jpg', use_column_width=True)
+
 

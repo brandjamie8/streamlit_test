@@ -123,22 +123,23 @@ waterfall_fig = go.Figure(go.Waterfall(
 ))
 
 # Stacked bar at the end of year showing backlog and waiting list
-waterfall_fig.add_trace(go.Bar(
-    x=["End of Year"],
-    y=[backlog_end_of_year],
-    name='Backlog',
-    marker_color='indianred'
-))
 
 waterfall_fig.add_trace(go.Bar(
     x=["End of Year"],
     y=[non_backlog_end_of_year],
     name='Waiting List',
-    marker_color='lightseagreen',
+    marker_color='lightblue',
     base=[backlog_end_of_year]
 ))
 
-waterfall_fig.update_layout(barmode='stack', title="Waiting List Dynamics Over the Year")
+waterfall_fig.add_trace(go.Bar(
+    x=["End of Year"],
+    y=[backlog_end_of_year],
+    name='Backlog',
+    marker_color='blue'
+))
+
+waterfall_fig.update_layout(barmode='stack', title="Waiting List Dynamics Over the Year", showlegend=False)
 st.plotly_chart(waterfall_fig, use_container_width=True)
 
 # Section 3 - Required Capacity to Meet Demand and Waiting Time Target

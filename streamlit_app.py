@@ -10,7 +10,27 @@ st.set_page_config(layout="wide")
 st.title("Hospital Theatres Demand and Capacity App")
 st.header("Section 1: Procedure Data and Last Year's Capacity")
 
-# Data Upload
+# Initialize session state for procedures if not already present
+if "procedures" not in st.session_state:
+    st.session_state.procedures = [
+        {"Procedure": "Procedure A", "Annual Demand (Cases)": 100, "Average Duration (Hours)": 2.0},
+    ]
+
+# Function to add new procedure to the list
+def add_procedure():
+    st.session_state.procedures.append(
+        {
+            "Procedure": st.session_state.procedure_name,
+            "Annual Demand (Cases)": st.session_state.procedure_demand,
+            "Average Duration (Hours)": st.session_state.procedure_duration,
+        }
+    )
+
+# Section 1 - Data Upload and Manual Entry
+st.title("Hospital Theatres Demand and Capacity App")
+st.header("Section 1: Procedure Data Entry")
+
+# Data Upload or Manual Entry
 uploaded_file = st.file_uploader("Upload Procedure Data", type='csv')
 
 if uploaded_file:
@@ -19,37 +39,38 @@ if uploaded_file:
     st.dataframe(df)
 else:
     st.write("Manually enter procedure data")
-    num_procedures = st.number_input('Number of Procedures', min_value=1, value=3)
-    procedures_data = {
-        'Procedure': [],
-        'Annual Demand (Cases)': [],
-        'Average Duration (Hours)': []
-    }
     
-    for i in range(num_procedures):
-        procedure = st.text_input(f'Procedure {i+1} Name')
-        demand = st.number_input(f'Annual Demand (Cases) for Procedure {i+1}', value=100)
-        duration = st.number_input(f'Average Duration (Hours) for Procedure {i+1}', value=2.0)
-        
-        procedures_data['Procedure'].append(procedure)
-        procedures_data['Annual Demand (Cases)'].append(demand)
-        procedures_data['Average Duration (Hours)'].append(duration)
+    # Table-based data entry
+    st.write("## Current Procedures")
+    procedure_df = pd.DataFrame(st.session_state.procedures)
+    st.dataframe(procedure_df)
 
-    df = pd.DataFrame(procedures_data)
+    # Form to add a new procedure
+    st.write("## Add a New Procedure")
+    with st.form("procedure_form", clear_on_submit=True):
+        procedure_name = st.text_input("Procedure Name", key="procedure_name")
+        procedure_demand = st.number_input("Annual Demand (Cases)", key="procedure_demand", min_value=0, value=100)
+        procedure_duration = st.number_input("Average Duration (Hours)", key="procedure_duration", min_value=0.0, value=1.0)
+        submitted = st.form_submit_button("Add Procedure", on_click=add_procedure)
+
+    # Convert session state into DataFrame for calculations
+    df = pd.DataFrame(st.session_state.procedures)
 
 # Calculate total demand
-df['Total Demand (Hours)'] = df['Annual Demand (Cases)'] * df['Average Duration (Hours)']
-df['Total Demand (Minutes)'] = df['Total Demand (Hours)'] * 60
-total_demand_hours = df['Total Demand (Hours)'].sum()
+df['Total Demand (Minutes)'] = df['Annual Demand (Cases)'] * df['Average Duration (Hours)'] * 60
 total_demand_minutes = df['Total Demand (Minutes)'].sum()
 
-# Visualize total demand per procedure in hours and minutes
+# Visualize total demand per procedure in cases and minutes
 st.subheader('Total Demand by Procedure')
-fig_demand_hours = px.bar(df, x='Procedure', y='Total Demand (Hours)', title='Total Demand in Hours by Procedure')
-st.plotly_chart(fig_demand_hours, use_container_width=True)
+
+fig_demand_cases = px.bar(df, x='Procedure', y='Annual Demand (Cases)', title='Total Demand in Cases by Procedure')
+st.plotly_chart(fig_demand_cases, use_container_width=True)
 
 fig_demand_minutes = px.bar(df, x='Procedure', y='Total Demand (Minutes)', title='Total Demand in Minutes by Procedure')
 st.plotly_chart(fig_demand_minutes, use_container_width=True)
+
+# Display the total demand in minutes
+st.write(f"**Total Demand (Minutes):** {total_demand_minutes}")
 
 # Input Last Year's Capacity
 st.subheader("Input Last Year's Capacity")
@@ -138,5 +159,5 @@ if st.sidebar.button('Download Results as CSV'):
     st.sidebar.write('Results exported as `results.csv`')
 
 # Add a logo
-st.sidebar.image('logo.jpeg', use_column_width=True)
+st.sidebar.image('logo.jpg', use_column_width=True)
 

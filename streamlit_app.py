@@ -118,7 +118,7 @@ waterfall_fig = go.Figure(go.Waterfall(
     connector={"line": {"color": "rgb(63, 63, 63)"}},
     decreasing={"marker": {"color": "red"}},
     increasing={"marker": {"color": "green"}},
-    totals={"marker": {"color": "lilac"}},
+    totals={"marker": {"color": "lavender"}},
     name="Total"
 ))
 

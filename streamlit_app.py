@@ -110,15 +110,15 @@ end_of_year_waiting_list = backlog_end_of_year + non_backlog_end_of_year
 st.subheader('Waterfall Chart: Waiting List Dynamics')
 
 waterfall_fig = go.Figure(go.Waterfall(
-    x=["New Additions", "Start of Year: Waiting List", "Start of Year: Backlog", "Treated from Backlog", "Treated from Waiting List", "End of Year"],
-    y=[waiting_list_addition, non_backlog_start, backlog_start, -treated_cases_for_breaches, -treated_other_cases, end_of_year_waiting_list],
-    measure=["absolute", "relative", "relative", "relative", "relative", "absolute"],
-    text=[f"{waiting_list_addition:.2f}", f"{non_backlog_start:.2f}", f"{backlog_start:.2f}", f"{-treated_cases_for_breaches:.2f}", f"{-treated_other_cases:.2f}", f"{end_of_year_waiting_list:.2f}"],
+    x=["New Additions", "Start of Year: Waiting List", "Start of Year: Backlog", "Treated from Backlog", "Treated from Waiting List"],
+    y=[waiting_list_addition, non_backlog_start, backlog_start, -treated_cases_for_breaches, -treated_other_cases],
+    measure=["absolute", "relative", "relative", "relative", "relative"],
+    text=[f"{waiting_list_addition:.2f}", f"{non_backlog_start:.2f}", f"{backlog_start:.2f}", f"{-treated_cases_for_breaches:.2f}", f"{-treated_other_cases:.2f}"],
     textposition="auto",
     connector={"line": {"color": "rgb(63, 63, 63)"}},
     decreasing={"marker": {"color": "red"}},
     increasing={"marker": {"color": "green"}},
-    totals={"marker": {"color": "blue"}},
+    totals={"marker": {"color": "lilac"}},
     name="Total"
 ))
 

@@ -12,7 +12,7 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
     body {
-        font-size:16px !important;
+        font-size:26px !important;
     }
     .reportview-container .main .block-container{
         padding-left: 3rem;

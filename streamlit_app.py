@@ -73,7 +73,7 @@ st.subheader("Input Last Year's Capacity")
 last_year_weeks = st.number_input('Weeks operating last year', value=48)
 last_year_sessions = st.number_input('Sessions per week last year', value=10)
 last_year_utilization = st.slider('Utilization Percentage', min_value=0.0, max_value=1.0, value=0.80, step=0.05)
-session_duration = st.number_input('Session Duration (Hours)', value=4)
+session_duration = 4
 
 # Calculate last year's total capacity
 last_year_total_sessions = last_year_weeks * last_year_sessions
@@ -123,9 +123,6 @@ waterfall_fig = go.Figure(go.Waterfall(
 ))
 
 # Stacked bar at the end of year showing backlog and waiting list
-
-
-
 waterfall_fig.add_trace(go.Bar(
     x=["End of Year"],
     y=[backlog_end_of_year],
@@ -139,17 +136,21 @@ waterfall_fig.add_trace(go.Bar(
     marker_color='lightblue',
     base=[backlog_end_of_year]
 ))
+
 waterfall_fig.update_layout(barmode='stack', title="Waiting List Dynamics Over the Year", showlegend=False)
 st.plotly_chart(waterfall_fig, use_container_width=True)
 
 # Section 3 - Required Capacity to Meet Demand and Waiting Time Target
 st.header("Section 3: Capacity Required to Meet Demand and Waiting Time Target")
 
+next_year_weeks = st.number_input('Weeks operating next year', value=48)
+next_year_utilization = st.slider('Utilisation percentage expected next year', min_value=0.0, max_value=1.0, value=0.80, step=0.01)
+
 # Automatically calculate the required sessions per week to meet demand
-required_capacity_minutes = total_demand_minutes - last_year_total_capacity_minutes
+required_capacity_minutes = total_demand_minutes
 
 # Convert required capacity to required sessions per week
-required_sessions = required_capacity_minutes / (last_year_weeks * last_year_total_minutes_per_session * last_year_utilization)
+required_sessions = required_capacity_minutes / (next_year_weeks * session_duration * 60 * next_year_utilization)
 st.write(f"**Required Sessions per Week to Meet Demand:** {required_sessions:.2f}")
 
 # Visualization: Required Capacity vs Demand

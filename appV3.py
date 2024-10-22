@@ -15,8 +15,8 @@ st.set_page_config(
 # Adjust the font size globally and add padding to the edges
 st.markdown("""
     <style>
-     body, p, div, span, h1, h2, h3, h4, h5, h6 {
-        font-size: 28px; /* Set your desired font size */
+     body, p, div, span, h3, h4, h5, h6 {
+        font-size: 18px; /* Set your desired font size */
     }
     .reportview-container .main .block-container{
         padding-left: 3rem;

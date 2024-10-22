@@ -6,13 +6,17 @@ import plotly.graph_objects as go
 import random
 
 # Set the layout to wide
-#st.set_page_config(layout="wide")
+st.set_page_config(
+    #layout="wide",
+    initial_sidebar_state="collapsed"
+
+)
 
 # Adjust the font size globally and add padding to the edges
 st.markdown("""
     <style>
-    body {
-        font-size:16px !important;
+     body, p, div, span, h1, h2, h3, h4, h5, h6 {
+        font-size: 18px; /* Set your desired font size */
     }
     .reportview-container .main .block-container{
         padding-left: 3rem;

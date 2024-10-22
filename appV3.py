@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import random
 
 # Set the layout to wide
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 # Adjust the font size globally and add padding to the edges
 st.markdown("""

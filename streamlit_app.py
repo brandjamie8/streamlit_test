@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 st.set_page_config(layout="wide")
 
 # Section 1 - Data Upload and Manual Entry
-st.title("Hospital Theatres Demand and Capacity App")
+st.title("Admitted Demand and Capacity")
 st.header("Section 1: Procedure Data and Last Year's Capacity")
 
 # Initialize session state for procedures if not already present
@@ -72,7 +72,7 @@ st.write(f"**Total Demand (Minutes):** {total_demand_minutes}")
 st.subheader("Input Last Year's Capacity")
 last_year_weeks = st.number_input('Weeks operating last year', value=48)
 last_year_sessions = st.number_input('Sessions per week last year', value=10)
-last_year_utilization = st.slider('Utilization Percentage', min_value=0.0, max_value=1.0, value=0.80, step=0.05)
+last_year_utilization = st.slider('Utilisation Percentage', min_value=0.0, max_value=1.0, value=0.80, step=0.01)
 session_duration = 4
 
 # Calculate last year's total capacity

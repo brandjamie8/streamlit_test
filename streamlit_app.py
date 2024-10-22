@@ -163,7 +163,7 @@ fig_capacity_vs_demand = px.bar(capacity_vs_demand, x='Category', y='Minutes', t
 st.plotly_chart(fig_capacity_vs_demand, use_container_width=True)
 
 # Add a logo
-st.sidebar.image('logo.jpg', use_column_width=True)
+st.sidebar.image('logo.svg', use_column_width=True)
 
 # Export Results
 st.sidebar.header('Export Results')

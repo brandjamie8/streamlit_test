@@ -374,9 +374,4 @@ st.write(f"**Sessions Required per Week to Meet Next Year's Demand Completely:**
 difference_sessions = required_sessions_per_week_next_year - sessions_per_week_next_year
 st.write(f"**Difference between Required and Planned Sessions per Week Next Year:** {difference_sessions:.2f}")
 
-# Export whole page to PDF
-st.write("## Export Results")
-if st.button('Export to PDF'):
-    st.write("Export functionality to PDF is not implemented in this code snippet.")
-
 # ------------------------------ End of the App ------------------------------

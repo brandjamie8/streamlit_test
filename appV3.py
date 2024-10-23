@@ -36,8 +36,11 @@ st.header("Section 1: Procedure Demand")
 
 st.write("""
 In this section, you can input your procedures along with their annual demand and average duration.
-You can either upload a CSV file or manually input the data. The app will calculate the total demand
-in cases and minutes, and display the top 10 procedures in terms of demand.
+You can either upload a CSV file or manually input the data. 
+""")
+
+st.write("""
+The app will calculate the total demand in cases and minutes, and display the top 10 procedures in terms of demand.
 """)
 
 # Initialize session state for procedures if not already present
@@ -64,10 +67,10 @@ if uploaded_file:
     st.write("Uploaded data preview:")
     st.dataframe(df)
 else:
-    st.write("Manually enter procedure data")
+    st.write("Or manually enter procedure data:")
     
     # Table-based data entry
-    st.write("## Current Procedures")
+    st.write("##Procedures Added to the Admitted Waiting List (Yearly):")
     procedure_df = pd.DataFrame(st.session_state.procedures)
     st.dataframe(procedure_df)
     
@@ -110,7 +113,7 @@ top10_minutes = df.sort_values(by='Total Demand (Minutes)', ascending=False).hea
 fig_top10_minutes = px.bar(
     top10_minutes,
     x='Procedure',
-    y='Total Demand (Minutes)',
+    y='Annual Demand (Minutes)',
     title='Top 10 Procedures by Demand in Session Minutes',
     text='Total Demand (Minutes)' if show_data_labels else None
 )
@@ -118,6 +121,7 @@ st.plotly_chart(fig_top10_minutes, use_container_width=True)
 
 # Add multiplier variable for next year's demand
 st.write("## Next Year's Demand Adjustment")
+st.write("If demand is expected to increase for next year add a multiplier here:")
 multiplier = st.number_input("Multiplier for Next Year's Demand", min_value=0.0, value=1.0, step=0.1)
 
 # Calculate next year's demand
@@ -427,8 +431,8 @@ waterfall_fig = go.Figure(go.Waterfall(
     textposition = "outside",
     text = text,
     connector = {"line":{"color":"rgb(63, 63, 63)"}},
-    decreasing={"marker":{"color":"red"}},
-    increasing={"marker":{"color":"green"}},
+    decreasing={"marker":{"color":"green"}},
+    increasing={"marker":{"color":"red"}},
     totals={"marker":{"color":"blue"}}
 ))
 

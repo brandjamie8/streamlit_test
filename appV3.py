@@ -70,7 +70,7 @@ else:
     st.write("Or manually enter procedure data:")
     
     # Table-based data entry
-    st.write("##Procedures Added to the Admitted Waiting List (Yearly):")
+    st.write("## Procedures Added to the Admitted Waiting List (Yearly):")
     procedure_df = pd.DataFrame(st.session_state.procedures)
     st.dataframe(procedure_df)
     

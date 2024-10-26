@@ -86,9 +86,9 @@ else:
     df = pd.DataFrame(st.session_state.procedures)
 
 # Calculate total demand
-df['Total Demand (Minutes)'] = df['Annual Demand (Cases)'] * df['Average Duration (Hours)'] * 60
+df['Annual Demand (Minutes)'] = df['Annual Demand (Cases)'] * df['Average Duration (Hours)'] * 60
 total_demand_cases = df['Annual Demand (Cases)'].sum()
-total_demand_minutes = df['Total Demand (Minutes)'].sum()
+total_demand_minutes = df['Annual Demand (Minutes)'].sum()
 
 st.write(f"**Total Demand (Cases):** {total_demand_cases:.0f}")
 st.write(f"**Total Demand (Minutes):** {total_demand_minutes:.0f}")
@@ -107,7 +107,7 @@ fig_top10_cases = px.bar(
 st.plotly_chart(fig_top10_cases, use_container_width=True)
 
 # Sort and select top 10 procedures by demand in minutes
-top10_minutes = df.sort_values(by='Total Demand (Minutes)', ascending=False).head(10)
+top10_minutes = df.sort_values(by='Annual Demand (Minutes)', ascending=False).head(10)
 
 # Chart - Top 10 procedure demand in session minutes
 fig_top10_minutes = px.bar(
@@ -115,7 +115,7 @@ fig_top10_minutes = px.bar(
     x='Procedure',
     y='Annual Demand (Minutes)',
     title='Top 10 Procedures by Demand in Session Minutes',
-    text='Total Demand (Minutes)' if show_data_labels else None
+    text='Annual Demand (Minutes)' if show_data_labels else None
 )
 st.plotly_chart(fig_top10_minutes, use_container_width=True)
 
